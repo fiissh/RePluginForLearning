@@ -1,0 +1,1 @@
+include ':app', ':replugin-host-library', ':replugin-host-gradle', ':replugin-plugin-library', ':replugin-plugin-gradle', ':replugin-plugin-sample-a'
