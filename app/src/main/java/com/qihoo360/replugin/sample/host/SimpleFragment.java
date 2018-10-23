@@ -21,15 +21,15 @@ public class SimpleFragment extends Fragment implements View.OnClickListener {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.framgment_simple, null);
-        rootView.findViewById(R.id.start_simple_a_by_package).setOnClickListener(this);
-        rootView.findViewById(R.id.start_simple_a_by_alias).setOnClickListener(this);
+        rootView.findViewById(R.id.start_sample_a_by_package).setOnClickListener(this);
+        rootView.findViewById(R.id.start_sample_b_by_alias).setOnClickListener(this);
         return rootView;
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.start_simple_a_by_package:
+            case R.id.start_sample_a_by_package:
                 // 使用包名打开 Simple A 的 MainActivity
                 if (RePlugin.isPluginInstalled("com.qihoo360.replugin.sample.a")) {
                     RePlugin.startActivity(getContext(), RePlugin.createIntent("com.qihoo360.replugin.sample.a", "com.qihoo360.replugin.sample.a.MainActivity"));
@@ -39,10 +39,10 @@ public class SimpleFragment extends Fragment implements View.OnClickListener {
 
                 break;
 
-            case R.id.start_simple_a_by_alias:
+            case R.id.start_sample_b_by_alias:
                 // 使用别名打开 Simple B 的 MainActivity
-                if (RePlugin.isPluginInstalled("simple-b")) {
-                    RePlugin.startActivity(getContext(), RePlugin.createIntent("simple-b", "com.qihoo360.replugin.sample.b.MainActivity"));
+                if (RePlugin.isPluginInstalled("sample-b")) {
+                    RePlugin.startActivity(getContext(), RePlugin.createIntent("sample-b", "com.qihoo360.replugin.sample.b.MainActivity"));
                 } else {
                     Toast.makeText(getContext(), "插件 Simple B 没有安装", Toast.LENGTH_LONG).show();
                 }

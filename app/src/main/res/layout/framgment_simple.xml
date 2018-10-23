@@ -4,21 +4,21 @@
     android:layout_height="match_parent">
 
     <Button
-        android:id="@+id/start_simple_a_by_package"
+        android:id="@+id/start_sample_a_by_package"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="20dp"
         android:layout_marginTop="28dp"
-        android:text="使用包名打开 Simple A" />
+        android:text="使用包名打开 Sample A" />
 
     <Button
-        android:id="@+id/start_simple_a_by_alias"
+        android:id="@+id/start_sample_b_by_alias"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignStart="@+id/start_simple_a_by_package"
+        android:layout_alignStart="@+id/start_sample_a_by_package"
         android:layout_alignParentTop="true"
         android:layout_marginTop="100dp"
-        android:text="使用别名打开 Simple B" />
+        android:text="使用别名打开 Sample B" />
 </RelativeLayout>
