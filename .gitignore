@@ -58,3 +58,5 @@ fastlane/screenshots
 fastlane/test_output
 fastlane/readme.md
 outputs/
+app/src/main/assets/external/*
+app/src/main/assets/plugins/*

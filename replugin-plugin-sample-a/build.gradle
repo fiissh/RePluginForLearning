@@ -11,7 +11,9 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        lintOptions {
+            abortOnError false
+        }
     }
     buildTypes {
         release {
@@ -24,6 +26,12 @@ android {
         }
     }
     productFlavors {
+    }
+
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 
@@ -45,11 +53,4 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':replugin-plugin-library')
-}
-
-task copyOutputsToHostApplication(type: Copy) {
-    print('=============生成 Plugin Simple A=============\n')
-    from 'build/outputs/apk/replugin-plugin-sample-a-debug.apk'
-    into '../app/src/main/assets/plugins/'
-    rename('replugin-plugin-sample-a-debug.apk', 'sample-a.jar')
 }

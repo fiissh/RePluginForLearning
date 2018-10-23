@@ -10,6 +10,9 @@ android {
 
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+        lintOptions {
+            abortOnError false
+        }
     }
     buildTypes {
         release {
@@ -17,13 +20,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
-    lintOptions {
-        abortOnError false
-    }
+
     // 务必要加上此段话，这样默认会出Debug版AAR，会带上日志方便定位
     defaultPublishConfig "debug"
     buildToolsVersion '25.0.3'
     productFlavors {
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
     }
 }
 

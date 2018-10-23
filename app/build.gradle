@@ -5,11 +5,18 @@ android {
     defaultConfig {
         applicationId "com.qihoo360.replugin.sample.host"
         minSdkVersion 21
+        //noinspection ExpiringTargetSdkVersion
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        lintOptions {
+            abortOnError false
+        }
+
     }
+
     dexOptions {
         incremental true
     }
@@ -22,11 +29,33 @@ android {
     buildToolsVersion '25.0.3'
     productFlavors {
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_7
+        targetCompatibility JavaVersion.VERSION_1_7
+    }
 }
 
 apply plugin: 'replugin-host-gradle'
+
+/**
+ * 配置项均为可选配置，默认无需添加
+ * 更多可选配置项参见replugin-host-gradle的RepluginConfig类
+ * 可更改配置项参见 自动生成RePluginHostConfig.java
+ */
 repluginHostConfig {
+    /**
+     * 是否使用 AppCompat 库
+     * 不需要个性化配置时，无需添加
+     */
     useAppCompat = true
+    /**
+     * 背景不透明的坑的数量
+     * 不需要个性化配置时，无需添加
+     */
+    countNotTranslucentStandard = 6
+    countNotTranslucentSingleTop = 2
+    countNotTranslucentSingleTask = 3
+    countNotTranslucentSingleInstance = 2
 }
 
 dependencies {
@@ -38,4 +67,16 @@ dependencies {
     androidTestCompile 'com.android.support.test:runner:1.0.2'
     androidTestCompile 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile project(':replugin-host-library')
+}
+
+task copyOutputsToHostApplication(type: Copy) {
+    print('=============生成 Plugin Simple A=============\n')
+    from '../replugin-plugin-sample-a/build/outputs/apk/replugin-plugin-sample-a-debug.apk'
+    into 'src/main/assets/plugins/'
+    rename('replugin-plugin-sample-a-debug.apk', 'sample-a.jar')
+
+    print('=============生成 Plugin Simple A=============\n')
+    from '../replugin-plugin-sample-b/build/outputs/apk/replugin-plugin-sample-b-debug.apk'
+    into 'src/main/assets/plugins/'
+    rename('replugin-plugin-sample-b-debug.apk', 'sample-b.jar')
 }
