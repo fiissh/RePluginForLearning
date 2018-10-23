@@ -18,6 +18,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
     }
     productFlavors {
     }
@@ -41,4 +45,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     compile project(':replugin-plugin-library')
+}
+
+task copyOutputsToHostApplication(type: Copy) {
+    print('=============生成 Plugin Simple A=============\n')
+    from 'build/outputs/apk/replugin-plugin-sample-a-debug.apk'
+    into '../app/src/main/assets/plugins/'
+    rename('replugin-plugin-sample-a-debug.apk', 'sample-a.jar')
 }
