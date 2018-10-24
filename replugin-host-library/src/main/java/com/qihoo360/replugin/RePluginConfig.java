@@ -36,30 +36,63 @@ import java.io.File;
 
 public final class RePluginConfig {
 
+    /**
+     * 插件框架对外回调接口集
+     */
     private RePluginCallbacks callbacks;
+    /**
+     * 插件化框架对外事件回调接口集
+     */
     private RePluginEventCallbacks eventCallbacks;
 
     /**
      * 插件的安装目录。默认初始化为 /data/data/package/files/ 目录
      */
     private File pnInstallDir;
+    /**
+     * 是否验证签名，默认为 false
+     */
     private boolean verifySign = false;
+    /**
+     * 是否开启 persistent 进程。默认为 false
+     */
     private boolean persistentEnable = true;
 
+    /**
+     * 是否允许插件使用宿主类。默认为 false
+     */
     private boolean useHostClassIfNotFound = false;
+    /**
+     * 在插件安装时，是否将文件 移动 到 app_p_a 目录下。默认为 true
+     */
     private boolean moveFileWhenInstalling = true;
+    /**
+     * 是否输出详细的 LOG 信息。默认为 false
+     */
     private boolean printDetailLog = false;
+    /**
+     * 框架默认版本号，默认为 4
+     */
     private int defaultFrameworkVersion = 4;
 
+    /**
+     * host 的版本名称
+     */
     private String hostVersionName = "";
+    /**
+     * host 的编译 ID
+     */
     private String hostBuildID = "";
 
+    /**
+     * 是否在 ART 上对首次加载插件速度做优化，默认为false
+     */
     private boolean optimizeArtLoadDex = false;
 
     /**
      * 获取插件回调方法。通常无需调用此方法。
      *
-     * @return 可供外界使用的回调
+     * @return RePluginCallbacks
      */
     public RePluginCallbacks getCallbacks() {
         return callbacks;
@@ -69,7 +102,7 @@ public final class RePluginConfig {
      * 设置插件回调方法，可自定义插件框架的回调行为
      *
      * @param callbacks 可供外界使用的回调
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      */
     public RePluginConfig setCallbacks(RePluginCallbacks callbacks) {
         if (!checkAllowModify()) {
@@ -82,7 +115,7 @@ public final class RePluginConfig {
     /**
      * 获取插件化框架的事件回调方法，通常无需调用此方法。
      *
-     * @return 可供外界使用的回调
+     * @return RePluginEventCallbacks
      */
     public RePluginEventCallbacks getEventCallbacks() {
         return eventCallbacks;
@@ -92,7 +125,7 @@ public final class RePluginConfig {
      * 设置插件化框架的事件回调方法，调用者可自定义插件框架的事件回调行为
      *
      * @param eventCallbacks 可供外界使用的回调
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      */
     public RePluginConfig setEventCallbacks(RePluginEventCallbacks eventCallbacks) {
         if (!checkAllowModify()) {
@@ -105,7 +138,7 @@ public final class RePluginConfig {
     /**
      * 获取"p-n型插件安装的路径"
      *
-     * @return 插件安装的路径
+     * @return File
      */
     public File getPnInstallDir() {
         return pnInstallDir;
@@ -116,7 +149,7 @@ public final class RePluginConfig {
      * 提示："纯APK"方案不受此方法的影响，新方案可在任意目录上安装
      *
      * @param pnInstallDir 插件安装的路径
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      */
     public RePluginConfig setPnInstallDir(File pnInstallDir) {
         if (!checkAllowModify()) {
@@ -129,7 +162,7 @@ public final class RePluginConfig {
     /**
      * 是否开启插件签名校验
      *
-     * @return 是否开启
+     * @return boolean
      */
     public boolean getVerifySign() {
         return verifySign;
@@ -141,7 +174,7 @@ public final class RePluginConfig {
      * 注意：该功能仅针对“纯APK”插件
      *
      * @param verifySign
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      */
     public RePluginConfig setVerifySign(boolean verifySign) {
         if (!checkAllowModify()) {
@@ -155,7 +188,7 @@ public final class RePluginConfig {
      * 是否当插件没有指定类时，使用宿主的类？ <p>
      * 有关该开关的具体说明，请参见setUseHostClass方法
      *
-     * @return 是否使用宿主类
+     * @return boolean
      * @since 1.3.0
      */
     public boolean isUseHostClassIfNotFound() {
@@ -168,7 +201,7 @@ public final class RePluginConfig {
      * 适用场景：宿主有FrescoView、Common View等
      *
      * @param useHostClassIfNotFound 是否使用宿主类
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      * @since 1.3.0
      */
     public RePluginConfig setUseHostClassIfNotFound(boolean useHostClassIfNotFound) {
@@ -183,7 +216,7 @@ public final class RePluginConfig {
      * 在插件安装时，是否将文件“移动”到app_p_a目录下？默认为True。 <p>
      * 有关该开关的具体说明，请参见setMoveFileWhenInstalling方法
      *
-     * @return 是否将文件“移动”到app_p_a目录下？
+     * @return boolean
      * @since 2.0.0
      */
     public boolean isMoveFileWhenInstalling() {
@@ -196,7 +229,7 @@ public final class RePluginConfig {
      * 注：只针对“纯APK”方案插件，对p-n无任何效果（因为p-n本身就不是一个标准的APK，必须“释放”而不能“移动”到app_plugin_v3目录下）
      *
      * @param moveFileWhenInstalling 是否将文件“移动”到app_p_a目录下？
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      * @since 2.0.0
      */
     public RePluginConfig setMoveFileWhenInstalling(boolean moveFileWhenInstalling) {
@@ -210,7 +243,7 @@ public final class RePluginConfig {
     /**
      * 获取宿主的 BuildID
      *
-     * @return 宿主的BuildID
+     * @return String
      * @since 2.2.2
      */
     public String getHostBuildID() {
@@ -222,7 +255,7 @@ public final class RePluginConfig {
      * BuildID 是一个比 VersionName 和 VersionCode 更细的维度（例如：服务器每 build 一次，版本号加 1)
      *
      * @param buildID 宿主的BuildID
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      * @since 2.2.2
      */
     public RePluginConfig setHostBuild(String buildID) {
@@ -236,6 +269,7 @@ public final class RePluginConfig {
     /**
      * 获取宿主的 VersionName
      *
+     * @return String
      * @since 2.2.2
      */
     public String getHostVersionName() {
@@ -246,7 +280,7 @@ public final class RePluginConfig {
      * 设置宿主的 VersionName
      *
      * @param versionName 宿主的VersionName
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      * @since 2.2.2
      */
     public RePluginConfig setHostVersionName(String versionName) {
@@ -260,7 +294,7 @@ public final class RePluginConfig {
     /**
      * 获取宿主的VersionBuild号
      *
-     * @return
+     * @return String
      * @since 2.2.2
      */
     public String getHostVersionBuild() {
@@ -270,7 +304,7 @@ public final class RePluginConfig {
     /**
      * 是否打印更详细的日志？
      *
-     * @return 是否打印？
+     * @return boolean
      * @since 2.0.0
      */
     public boolean isPrintDetailLog() {
@@ -279,10 +313,10 @@ public final class RePluginConfig {
 
     /**
      * 是否打印更详细的日志？注意，可能会导致“刷屏”，以及因输出内存日志而出现一定的性能问题。 <p>
-     * 默认为：False。若为Release版AAR则此开关无效
+     * 默认为：False。若为 Release 版 AAR 则此开关无效
      *
      * @param printDetailLog 是否打印？
-     * @return RePluginConfig自己。这样可以连环调用set方法
+     * @return RePluginConfig
      * @since 2.0.0
      */
     public RePluginConfig setPrintDetailLog(boolean printDetailLog) {
@@ -293,7 +327,7 @@ public final class RePluginConfig {
     /**
      * 获取框架默认版本号
      *
-     * @return defaultFrameworkVersion
+     * @return int
      * @since 2.1.0
      */
     public int getDefaultFrameworkVersion() {
@@ -304,7 +338,7 @@ public final class RePluginConfig {
      * 设置框架默认版本号
      *
      * @param defaultFrameworkVersion 框架默认版本号
-     * @return RePluginConfig 这样可以连环调用set方法
+     * @return RePluginConfig
      * @since 2.1.0
      */
     public RePluginConfig setDefaultFrameworkVersion(int defaultFrameworkVersion) {
@@ -341,7 +375,11 @@ public final class RePluginConfig {
         }
     }
 
-    // 不允许在attachBaseContext调用完成之后再来修改RePluginConfig对象中的内容
+    /**
+     * 不允许在 attachBaseContext 调用完成之后再修改 RePluginConfig 对象中的内容
+     *
+     * @return
+     */
     private boolean checkAllowModify() {
         if (RePlugin.App.sAttached) {
             // 不能在此处抛异常，因为个别情况下，宿主的attachBaseContext可能会被调用多次，导致最终出现异常。这里只打出日志即可。
@@ -355,19 +393,19 @@ public final class RePluginConfig {
     }
 
     /**
-     * 是否在Art上对首次加载插件速度做优化
+     * 是否在 ART 上对首次加载插件速度做优化
      *
-     * @return
+     * @return boolean
      */
     public boolean isOptimizeArtLoadDex() {
         return optimizeArtLoadDex;
     }
 
     /**
-     * 是否在Art上对首次加载插件速度做优化，默认为false
+     * 是否在 ART 上对首次加载插件速度做优化，默认为false
      *
      * @param optimizeArtLoadDex
-     * @return
+     * @return RePluginConfig
      * @since 2.2.2
      */
     public RePluginConfig setOptimizeArtLoadDex(boolean optimizeArtLoadDex) {

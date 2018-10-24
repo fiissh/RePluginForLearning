@@ -32,6 +32,7 @@ import com.qihoo360.replugin.utils.Dex2OatUtils;
 import com.qihoo360.replugin.utils.InterpretDex2OatHelper;
 
 import java.io.File;
+import java.util.Date;
 
 /**
  * @author RePlugin Team
@@ -94,9 +95,6 @@ public class SampleApplication extends Application {
         // FIXME 若宿主为Release，则此处应加上您认为"合法"的插件的签名，例如，可以写上"宿主"自己的。
         // RePlugin.addCertSignature("AAAAAAAAA");
 
-        // 在Art上，优化第一次loadDex的速度
-        // pluginConfig.setOptimizeArtLoadDex(true);
-
         // 设置插件回调方法，可自定义插件框架的回调行为
         pluginConfig.setCallbacks(new HostCallbacks(this));
 
@@ -108,6 +106,18 @@ public class SampleApplication extends Application {
 
         // 是否在Art上对首次加载插件速度做优化，默认为false
         pluginConfig.setOptimizeArtLoadDex(true);
+
+        // 设置框架默认版本号
+        pluginConfig.setDefaultFrameworkVersion(BuildConfig.VERSION_CODE);
+
+        // 设置宿主的 BuildID
+        pluginConfig.setHostBuild(new Date().toString());
+
+        // 设置宿主的 VersionName
+        pluginConfig.setHostVersionName(BuildConfig.VERSION_NAME);
+
+        // 设置“p-n型插件安装的路径”
+        pluginConfig.setPnInstallDir(new File(getFilesDir().toString()));
         return pluginConfig;
     }
 
