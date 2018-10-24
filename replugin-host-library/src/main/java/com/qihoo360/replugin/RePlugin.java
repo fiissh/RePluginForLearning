@@ -1005,8 +1005,10 @@ public class RePlugin {
          * @see Application#onCreate()
          */
         public static void onCreate() {
+
+            // 如果没有调用 attachBaseContext，则抛出 IllegalStateException 异常
             if (!sAttached) {
-                throw new IllegalStateException();
+                throw new IllegalStateException("call attachBaseContext before  onCreate");
             }
 
             // 初始化用于执行任务的 Task 框架
