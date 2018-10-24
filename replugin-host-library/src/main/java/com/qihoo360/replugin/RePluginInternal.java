@@ -25,6 +25,8 @@ import com.qihoo360.BuildConfig;
  * 对框架暴露的一些通用的接口。
  * <p>
  * 注意：插件框架内部使用，外界请不要调用。
+ * <p>
+ * 其主要作用是全局缓存 Application 对象
  *
  * @author RePlugin Team
  */

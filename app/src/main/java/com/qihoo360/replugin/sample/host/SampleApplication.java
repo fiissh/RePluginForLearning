@@ -41,6 +41,7 @@ public class SampleApplication extends Application {
     @Override
     protected void attachBaseContext(Context context) {
         super.attachBaseContext(context);
+        // Application 初始化时，初始化 RePlugin.App，并初始化 RePlugin 的配置
         RePlugin.App.attachBaseContext(this, getRePluginConfig());
         // FIXME 允许接收rpRunPlugin等Gradle Task，发布时请务必关掉，以免出现问题
         RePlugin.enableDebugger(context, BuildConfig.DEBUG);

@@ -43,21 +43,35 @@ public class IPC {
     private static String sCurrentProcess;
     private static int sCurrentPid;
     private static String sPackageName;
+    /**
+     * persistent 进程的名称
+     */
     private static String sPersistentProcessName;
 
+    /**
+     * 是否是守护进程
+     */
     private static boolean sIsPersistentProcess;
+    /**
+     * 是否是 UI 进程
+     */
     private static boolean sIsUIProcess;
 
     /**
      * [HIDE] 外界请不要调用此方法
      */
     public static void init(Context context) {
+        // 获取当前进程名称
         sCurrentProcess = SysUtils.getCurrentProcessName();
+        // 获取当前进程的 ID，即 pid
         sCurrentPid = Process.myPid();
+        // 获取当前包名
         sPackageName = context.getApplicationInfo().packageName;
 
         // 设置最终的常驻进程名
+        // 先判断是否开启 persistent 进程
         if (HostConfigHelper.PERSISTENT_ENABLE) {
+            // 框架默认的 persistent name 为 :GuardService
             String cppn = HostConfigHelper.PERSISTENT_NAME;
             if (!TextUtils.isEmpty(cppn)) {
                 if (cppn.startsWith(":")) {
@@ -70,6 +84,8 @@ public class IPC {
             sPersistentProcessName = sPackageName;
         }
 
+
+        // 判断UI进程还是守护进程
         sIsUIProcess = sCurrentProcess.equals(sPackageName);
         sIsPersistentProcess = sCurrentProcess.equals(sPersistentProcessName);
     }
@@ -205,6 +221,7 @@ public class IPC {
 
     /**
      * 获取当前宿主的包名（从缓存中）
+     *
      * @return 宿主的包名
      */
     public static String getPackageName() {

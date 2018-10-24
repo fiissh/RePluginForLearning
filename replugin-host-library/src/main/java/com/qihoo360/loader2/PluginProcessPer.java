@@ -56,7 +56,8 @@ class PluginProcessPer extends IPluginClient.Stub {
 
     final PluginServiceServer mServiceMgr;
 
-    final PluginContainers mACM; // TODO 考虑去掉 {package}权限
+    // TODO 考虑去掉 {package}权限
+    final PluginContainers mACM;
 
     private Plugin mDefaultPlugin;
 
@@ -81,6 +82,7 @@ class PluginProcessPer extends IPluginClient.Stub {
 
     /**
      * 类加载器根据容器解析到目标的activity
+     *
      * @param container
      * @return
      */

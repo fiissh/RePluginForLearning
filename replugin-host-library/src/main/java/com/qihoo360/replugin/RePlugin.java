@@ -953,6 +953,7 @@ public class RePlugin {
          * @since 1.2.0
          */
         public static void attachBaseContext(Application app, RePluginConfig config) {
+            // 如果已经 attached ，则直接 return
             if (sAttached) {
                 if (LogDebug.LOG) {
                     LogDebug.d(TAG, "attachBaseContext: Already called");
@@ -962,24 +963,27 @@ public class RePlugin {
 
             // 将 Application 对象进行全局缓存
             RePluginInternal.init(app);
+
             sConfig = config;
             //  针对 RePlugin.App.AttachBaseContext 的调用，初始化默认值
             sConfig.initDefaults(app);
-            // 进程间通信服务的初始化
+
+            // 进程间通信服务的初始化，该过程会设置当前 persistent 进程的名称以及判断当前进程是 UI 进程还是 persistent 进程
             IPC.init(app);
 
             // 初始化 HostConfigHelper（通过反射 HostConfig 来实现）
             // NOTE 一定要在IPC类初始化之后才使用
             HostConfigHelper.init();
 
-            // FIXME 此处需要优化掉
+            // FIXME 此处需要优化掉。目前来看 host Library 项目中并没有实际使用，可否考虑去掉该类？
             AppVar.sAppContext = app;
 
-            // Plugin Status Controller
+            // Plugin Status Controller，用来管理插件的状态：正常运行、被禁用，还是其它情况
             PluginStatusController.setAppContext(app);
 
             // 初始化 PMF 框架，完成 Hook
             PMF.init(app);
+            // 加载默认插件
             PMF.callAttach();
 
 

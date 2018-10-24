@@ -61,11 +61,12 @@ public class PMF {
     }
 
     /**
-     * 初始化 PMF框架，主要完成 Hook
+     * 初始化 PMF 框架，主要完成 Hook
      *
      * @param application
      */
     public static final void init(Application application) {
+
         setApplicationContext(application);
 
         PluginManager.init(application);
@@ -73,9 +74,12 @@ public class PMF {
         sPluginMgr = new PmBase(application);
         sPluginMgr.init();
 
+        // 获取 PluginCommImpl，用于宿主与插件、插件与插件之间的互通
         Factory.sPluginManager = PMF.getLocal();
         Factory2.sPLProxy = PMF.getInternal();
 
+        // TODO RePlugin 框架中唯一的一个 Hook 点，也是框架最为核心的位置。此处是否考虑在 Hook 失败的情况下，直接抛出异常？
+        // 如果直接抛出运行时异常，整个 host 就崩掉了，用户体验不好。但是此处 HOOK 失败对整个框架都有影响，应该怎么处理呢？
         PatchClassLoaderUtils.patch(application);
     }
 
@@ -103,14 +107,19 @@ public class PMF {
     }
 
     /**
-     * @return
+     * 获取 PluginCommImpl，用于宿主与插件、插件与插件之间的互通
+     *
+     * @return PluginCommImpl
      */
     public static final PluginCommImpl getLocal() {
         return sPluginMgr.mLocal;
     }
 
+
     /**
-     * @return
+     * 获取 PluginLibraryInternalProxy 对象
+     *
+     * @return PluginLibraryInternalProxy
      */
     public static final PluginLibraryInternalProxy getInternal() {
         return sPluginMgr.mInternal;

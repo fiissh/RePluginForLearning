@@ -29,7 +29,7 @@ import static com.qihoo360.replugin.helper.LogDebug.PLUGIN_TAG;
 import static com.qihoo360.replugin.helper.LogRelease.LOGR;
 
 /**
- * 对宿主的HostClassLoader做修改。这是RePlugin中唯一需要修改宿主私有属性的位置了
+ * 对宿主的 HostClassLoader 做修改。这是 RePlugin 中唯一需要修改宿主私有属性的位置了
  *
  * @author RePlugin Team
  */
@@ -37,6 +37,12 @@ public class PatchClassLoaderUtils {
 
     private static final String TAG = "PatchClassLoaderUtils";
 
+    /**
+     * 对 ClassLoader 进行 Hook
+     *
+     * @param application
+     * @return
+     */
     public static boolean patch(Application application) {
         try {
             // 获取Application的BaseContext （来自ContextWrapper）

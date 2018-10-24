@@ -39,6 +39,9 @@ public final class RePluginConfig {
     private RePluginCallbacks callbacks;
     private RePluginEventCallbacks eventCallbacks;
 
+    /**
+     * 插件的安装目录。默认初始化为 /data/data/package/files/ 目录
+     */
     private File pnInstallDir;
     private boolean verifySign = false;
     private boolean persistentEnable = true;
@@ -314,18 +317,25 @@ public final class RePluginConfig {
 
     /**
      * 针对RePlugin.App.AttachBaseContext的调用，初始化默认值
+     * <p>
+     * 该方法主要是用于初始化一些依赖 Context 的对象
      *
      * @param context
      */
     void initDefaults(Context context) {
+        // 初始化插件的安装目录 pnInstallDir，
         if (pnInstallDir == null) {
             pnInstallDir = context.getFilesDir();
         }
 
+        // 初始化 插件框架对外回调接口集
+        // FIXME RePluginCallbacks 的自定义实现可以通过 setCallbacks(RePluginCallbacks rePluginCallbacks) 传入，在此处进行初始化是不是有点过早？
         if (callbacks == null) {
             callbacks = new RePluginCallbacks(context);
         }
 
+        // 初始化 插件化框架对外事件回调接口集
+        //  FIXME  RePluginEventCallbacks 的自定义实现可以通过 setEventCallbacks(RePluginEventCallbacks rePluginEventCallbacks) 传入，在此处进行初始化是不是有点过早？
         if (eventCallbacks == null) {
             eventCallbacks = new RePluginEventCallbacks(context);
         }
