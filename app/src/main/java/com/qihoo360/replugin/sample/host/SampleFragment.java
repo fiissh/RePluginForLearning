@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.qihoo360.replugin.RePlugin;
 
-public class SimpleFragment extends Fragment implements View.OnClickListener {
+public class SampleFragment extends Fragment implements View.OnClickListener {
 
     private static final int REQUEST_CODE_SIMPLE_A = 0x011;
     private static final int RESULT_CODE_SIMPLE_A = 0x012;
