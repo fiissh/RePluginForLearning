@@ -3,11 +3,12 @@
 buildscript {
 
     repositories {
-        google()
-        jcenter()
+
         maven {
             url uri("outputs/gradle/repos/")
         }
+        google()
+        jcenter()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
@@ -18,21 +19,21 @@ buildscript {
 
         // for replugin-host-sample
 //        classpath "com.qihoo360.replugin:replugin-host-gradle:2.3.1"
-        classpath "com.qihoo360.replugin:replugin-host-gradle:2.3.0.0"
+        classpath "com.qihoo360.replugin:replugin-host-gradle:2.3.0"
 
         // for replugin-plugin-sample
-        classpath "com.qihoo360.replugin:replugin-plugin-gradle:2.3.0.0"
+        classpath "com.qihoo360.replugin:replugin-plugin-gradle:2.3.0"
 
     }
 }
 
 allprojects {
     repositories {
-        google()
-        jcenter()
         maven {
             url uri("outputs/gradle/repos/")
         }
+        google()
+        jcenter()
     }
 }
 

@@ -33,7 +33,7 @@ buildscript {
 }
 
 //红色醒目打印显示版本号
-version = '2.3.0.0'
+version = '2.3.0'
 java.lang.System.err.println "version=$version"
 
 dependencies {

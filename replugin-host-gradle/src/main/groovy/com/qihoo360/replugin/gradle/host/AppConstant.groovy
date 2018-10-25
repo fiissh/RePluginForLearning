@@ -26,7 +26,7 @@ class AppConstant {
     def static final VER = "2.3.1"
 
     /** 打印信息时候的前缀 */
-    def static final TAG = "< replugin-host-v${VER} >"
+    def static final TAG = "< replugin-host-v${VER}-local-plugin >"
 
     /** 外部用户配置信息 */
     def static final USER_CONFIG = "repluginHostConfig"
