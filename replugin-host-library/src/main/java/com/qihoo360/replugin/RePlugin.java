@@ -1012,6 +1012,7 @@ public class RePlugin {
             }
 
             // 初始化用于执行任务的 Task 框架
+            // FIXME PluginManager#init 中重复调用了  Tasks.init() ，是否考虑去掉 PluginManager 的调用？
             Tasks.init();
 
             PMF.callAppCreate();
