@@ -945,7 +945,16 @@ public class RePlugin {
 
         /**
          * （推荐）当 Application 的 attachBaseContext 调用时需调用此方法 <p>
-         * 可自定义插件框架的行为。参见 RePluginConfig 类的说明
+         * 可自定义插件框架的行为。参见 RePluginConfig 类的说明。
+         * <p>
+         * 该过程主要是配置 RePluginConfig 和 RePluginCallback，然后根据 Config 初始化插件：
+         * <p>
+         * 1. 初始化插件相关进程
+         * 2. 配置插件信息
+         * 3. 初始化插件的主框架和接口
+         * 4. 加载默认插件
+         * <p>
+         * 插件的初始化主要集中在 PMF.init() 和 PMF.callAttach()。
          *
          * @param app Application 对象
          * @see Application#attachBaseContext(Context)
@@ -1000,6 +1009,8 @@ public class RePlugin {
         /**
          * 当 Application 的 onCreate 调用时触发。 <p>
          * 务必先调用 attachBaseContext 后，才能调用此方法，否则抛出 IllegalStateException 异常
+         * <p>
+         * 该过程主要是切换 Handler 到主进程，注册各种广播接收器（添加、卸载、更新插件等）
          *
          * @throws IllegalStateException 若没有调用 attachBaseContext，则抛出此异常
          * @see Application#onCreate()
@@ -1011,10 +1022,9 @@ public class RePlugin {
                 throw new IllegalStateException("call attachBaseContext before  onCreate");
             }
 
-            // 初始化用于执行任务的 Task 框架
-            // FIXME PluginManager#init 中重复调用了  Tasks.init() ，是否考虑去掉 PluginManager 的调用？
+            // 初始化用于执行任务的 Task 框架，切换任务到当前 handler
             Tasks.init();
-
+            // 注册用于接收插件安装、卸载更新等相关的广播接收器
             PMF.callAppCreate();
 
             // 注册监听 PluginInfo 变化的广播以接收来自常驻进程的更新，该广播需要注册在 UI 进程

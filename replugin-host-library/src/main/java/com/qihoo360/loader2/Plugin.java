@@ -427,7 +427,7 @@ class Plugin {
     }
 
     /**
-     *
+     * 加载插件
      */
     final boolean load(int load, boolean useCache) {
         PluginInfo info = mInfo;
@@ -459,6 +459,7 @@ class Plugin {
 
     /**
      * 从缓存中读取Loader信息
+     *
      * @param load 加载类型
      * @return true: 缓存命中 false: 没有缓存
      */

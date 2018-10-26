@@ -69,13 +69,17 @@ public class PMF {
 
         setApplicationContext(application);
 
+        // 初始化 PID 和 当前进程类型
         PluginManager.init(application);
 
+        // 实例化插件管理类
         sPluginMgr = new PmBase(application);
+        // 加载默认插件
         sPluginMgr.init();
 
-        // 获取 PluginCommImpl，用于宿主与插件、插件与插件之间的互通
+        // 获取 PluginCommImpl，主要提供 query、load、startActivity、getActivityInfo 等接口
         Factory.sPluginManager = PMF.getLocal();
+        // 获取 PluginLibraryInternalProxy，主要用于内部框架使用
         Factory2.sPLProxy = PMF.getInternal();
 
         // TODO RePlugin 框架中唯一的一个 Hook 点，也是框架最为核心的位置。此处是否考虑在 Hook 失败的情况下，直接抛出异常？
@@ -91,7 +95,9 @@ public class PMF {
     }
 
     /**
-     *
+     * 实际调用 PmBase的 callAttach()，初始化插件的 PluginDexClassLoader、加载插件、初始化插件环境和接口
+     * <p>
+     * 其中，执行 p.load() 时，会通过 Plugind.callAppLocked() 创建插件的 Application，并初始化
      */
     public static final void callAttach() {
         sPluginMgr.callAttach();

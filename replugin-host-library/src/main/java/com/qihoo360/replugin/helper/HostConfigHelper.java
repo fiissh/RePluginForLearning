@@ -37,7 +37,10 @@ public class HostConfigHelper {
     // 注意:以下配置项必须和 replugin-host-gradle 插件中的配置相同
     //------------------------------------------------------------
 
-    // 是否使用“常驻进程”（见PERSISTENT_NAME）作为插件的管理进程
+
+    /**
+     * 是否使用“常驻进程”（见PERSISTENT_NAME）作为插件的管理进程
+     */
     public static boolean PERSISTENT_ENABLE = true;
 
     // 常驻进程名

@@ -66,6 +66,8 @@ import static com.qihoo360.replugin.helper.LogRelease.LOGR;
 import static com.qihoo360.replugin.packages.PluginInfoUpdater.ACTION_UNINSTALL_PLUGIN;
 
 /**
+ * 插件管理，负责坑位分配、ClassLoader、插件、进程、启动/停止 Activity 等接口
+ *
  * @author RePlugin Team
  */
 class PmBase {
@@ -180,7 +182,9 @@ class PmBase {
 
         String plugin;
 
-        /** @deprecated */
+        /**
+         * @deprecated
+         */
         String classType; // activity, service, provider
 
         Class defClass;
@@ -206,6 +210,8 @@ class PmBase {
         // TODO init
         //init(context, this);
 
+        // 为 Provider 和 Service 填充坑位
+        // FIXME 这个写法好奇怪
         if (PluginManager.sPluginProcessIndex == IPluginManager.PROCESS_UI || PluginManager.isPluginProcess()) {
             String suffix;
             if (PluginManager.sPluginProcessIndex == IPluginManager.PROCESS_UI) {
@@ -219,21 +225,27 @@ class PmBase {
             mContainerServices.add(IPC.getPackageName() + CONTAINER_SERVICE_PART + suffix);
         }
 
-        //
+        // IBinder，插件的进程间通信类，包含了 PluginContainers，插件容器管理类的初始化
         mClient = new PluginProcessPer(context, this, PluginManager.sPluginProcessIndex, mContainerActivities);
 
-        //
+        // 本地插件的管理类
         mLocal = new PluginCommImpl(context, this);
 
-        //
+        // 插件内部 Activity 管理类
         mInternal = new PluginLibraryInternalProxy(this);
     }
 
+    /**
+     * 插件管理类的初始化，启动各种进程，初始化各种默认插件集合为后续的加载做准备
+     */
     void init() {
 
+        // 回调插件初始化
         RePlugin.getConfig().getCallbacks().initPnPluginOverride();
 
+        // 是否使用 persistent 进程，也就是常驻进程
         if (HostConfigHelper.PERSISTENT_ENABLE) {
+
             // （默认）“常驻进程”作为插件管理进程，则常驻进程作为Server，其余进程作为Client
             if (IPC.isPersistentProcess()) {
                 // 初始化“Server”所做工作
@@ -271,7 +283,6 @@ class PmBase {
 
     /**
      * Persistent(常驻)进程的初始化
-     *
      */
     private final void initForServer() {
         if (LOG) {
@@ -305,7 +316,6 @@ class PmBase {
 
     /**
      * Client(UI进程)的初始化
-     *
      */
     private final void initForClient() {
         if (LOG) {
@@ -446,11 +456,16 @@ class PmBase {
         }
     }
 
+    /**
+     * 实际调用 PmBase的 callAttach()，初始化插件的 PluginDexClassLoader、加载插件、初始化插件环境和接口
+     * <p>
+     * 其中，执行 p.load() 时，会通过 Plugind.callAppLocked() 创建插件的 Application，并初始化
+     */
     final void callAttach() {
-        //
+        // 获得 PmBase 的 ClassLoader
         mClassLoader = PmBase.class.getClassLoader();
 
-        // 挂载
+        // 挂载插件
         for (Plugin p : mPlugins.values()) {
             p.attach(mContext, mClassLoader, mLocal);
         }
@@ -461,12 +476,14 @@ class PmBase {
                 //
                 Plugin p = mPlugins.get(mDefaultPluginName);
                 if (p != null) {
+                    // 开始加载插件，并在此处尝试调用 Application 的 onCreate
                     boolean rc = p.load(Plugin.LOAD_APP, true);
                     if (!rc) {
                         if (LOG) {
                             LogDebug.d(PLUGIN_TAG, "failed to load default plugin=" + mDefaultPluginName);
                         }
                     }
+                    // 加载成功，则初始化 Plugin
                     if (rc) {
                         mDefaultPlugin = p;
                         mClient.init(p);
@@ -952,7 +969,8 @@ class PmBase {
                     if (load) {
                         try {
                             PluginBinderInfo info = new PluginBinderInfo(PluginBinderInfo.BINDER_REQUEST);
-                            /*IPluginClient client = */MP.startPluginProcess(a, IPluginManager.PROCESS_AUTO, info);
+                            /*IPluginClient client = */
+                            MP.startPluginProcess(a, IPluginManager.PROCESS_AUTO, info);
                         } catch (Throwable e) {
                             e.printStackTrace();
                         }
