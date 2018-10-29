@@ -118,6 +118,7 @@ public class SampleApplication extends Application {
 
         // 设置“p-n型插件安装的路径”
         pluginConfig.setPnInstallDir(new File(getFilesDir().toString()));
+
         return pluginConfig;
     }
 
