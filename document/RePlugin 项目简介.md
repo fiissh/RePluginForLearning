@@ -1,4 +1,11 @@
-## 关于 RePlugin
+<p align="center">
+  <a href="https://github.com/Qihoo360/RePlugin/wiki">
+    <img alt="RePlugin Logo" src="https://github.com/Qihoo360/RePlugin/wiki/img/RePlugin.png" width="400"/>
+  </a>
+</p>
+
+
+[![license](http://img.shields.io/badge/license-Apache2.0-brightgreen.svg?style=flat)](https://github.com/Qihoo360/RePlugin/blob/master/LICENSE)
 
 `RePlugin` 是360开源的一款 `Android` 平台全面插件化框架。具体介绍请参考 [RePlugin](https://github.com/Qihoo360/RePlugin/blob/dev/README_CN.md)。
 
