@@ -43,19 +43,55 @@ apply plugin: 'replugin-host-gradle'
  * 可更改配置项参见 自动生成RePluginHostConfig.java
  */
 repluginHostConfig {
-    /**
-     * 是否使用 AppCompat 库
-     * 不需要个性化配置时，无需添加
-     */
-    useAppCompat = true
-    /**
-     * 背景不透明的坑的数量
-     * 不需要个性化配置时，无需添加
-     */
+
+    /** 自定义进程的数量(除 UI 和 Persistent 进程) */
+    countProcess = 3
+
+    /** 是否使用常驻进程？ */
+    persistentEnable = true
+
+    /** 常驻进程名称（也就是上面说的 Persistent 进程，开发者可自定义）*/
+    persistentName = ':GuardService'
+
+    /** 背景不透明的坑的数量 */
     countNotTranslucentStandard = 6
     countNotTranslucentSingleTop = 2
     countNotTranslucentSingleTask = 3
     countNotTranslucentSingleInstance = 2
+
+    /** 背景透明的坑的数量 */
+    countTranslucentStandard = 2
+    countTranslucentSingleTop = 2
+    countTranslucentSingleTask = 2
+    countTranslucentSingleInstance = 3
+
+    /** 宿主中声明的 TaskAffinity 的组数 */
+    countTask = 2
+
+    /** 是否使用 AppCompat 库 com.android.support:appcompat-v7:25.2.0 */
+    useAppCompat = true
+
+    /** HOST 向下兼容的插件版本 */
+    compatibleVersion = 10
+
+    /** HOST 插件版本 */
+    currentVersion = 12
+
+    /** plugins-builtin.json 文件名自定义,默认是 "plugins-builtin.json" */
+    builtInJsonFileName = "plugins-builtin.json"
+
+    /** 是否自动管理 plugins-builtin.json 文件,默认自动管理 */
+    autoManageBuiltInJsonFile = true
+
+    /** assert目录下放置插件文件的目录自定义,默认是 assert 的 "plugins" */
+    pluginDir = "plugins"
+
+    /** 插件文件的后缀自定义,默认是".jar" 暂时支持 jar 格式*/
+    pluginFilePostfix = ".jar"
+
+    /** 当发现插件目录下面有不合法的插件 jar (有可能是特殊定制 jar)时是否停止构建,默认是 true */
+    enablePluginFileIllegalStopBuild = true
+
 }
 
 dependencies {

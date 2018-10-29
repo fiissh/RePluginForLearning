@@ -36,8 +36,29 @@ android {
 // 这个plugin需要放在android配置之后，因为需要读取android中的配置项
 apply plugin: 'replugin-plugin-gradle'
 repluginPluginConfig {
+
+    /** 编译的 App Module 的名称 */
+    appModule = ':replugin-plugin-sample-b'
+
+    /** 用户声明要忽略的注入器 */
+    ignoredInjectors = []
+
+    /** 执行 LoaderActivity 替换时，用户声明不需要替换的 Activity */
+    ignoredActivities = []
+
+    /** 自定义的注入器 */
+    customInjectors = []
+
+    /** 插件名字,默认null */
     pluginName = "sample-b"
+
+    /** 手机存储目录,默认"/sdcard/" */
+    phoneStorageDir = "/sdcard/"
+
+    /** 宿主包名,默认null */
     hostApplicationId = "com.qihoo360.replugin.sample.host"
+
+    /** 宿主launcherActivity,默认null */
     hostAppLauncherActivity = "com.qihoo360.replugin.sample.host.MainActivity"
 }
 
