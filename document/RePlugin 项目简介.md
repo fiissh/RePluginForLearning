@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Qihoo360/RePlugin/wiki">
+  <a href="https://github.com/fiissh/RePluginForLearning">
     <img alt="RePlugin Logo" src="https://github.com/Qihoo360/RePlugin/wiki/img/RePlugin.png" width="400"/>
   </a>
 </p>
